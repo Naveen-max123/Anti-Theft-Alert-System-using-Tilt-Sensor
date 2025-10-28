@@ -1,14 +1,21 @@
 # Anti-Theft-Alert-System-using-Tilt-Sensor
 
-## Aim: To measure the tilt Sensor using SW200D with Arduino UNO Board/ESP-32 using Tinker CAD.
+## Aim: 
+To measure the tilt Sensor using SW200D with Arduino UNO Board/ESP-32 using Tinker CAD.
 
 ## Hardware / Software Tools required:
-	PC/ Laptop with Internet connection
-  Tinker CAD tool (Online)
-	Arduino UNO Board/ESP-32
-	Tilt sensor(SW200D)
+- PC/ Laptop with Internet connection
+- Tinker CAD tool (Online)
+- Arduino UNO Board/ESP-32
+- Tilt sensor(SW200D)
+
+## Schematic view:
+<img width="976" height="729" alt="Screenshot 2025-09-02 234515" src="https://github.com/user-attachments/assets/d5d45b75-353b-4bba-8da3-7c29b30bb12f" />
+
 
 ## Circuit Diagram:
+<img width="817" height="717" alt="Screenshot 2025-09-02 234458" src="https://github.com/user-attachments/assets/76b3ea43-975d-46fb-8018-f08cedb66166" />
+
  
 ## Theory :
  The Arduino Uno is powered by the ATmega328P, an 8-bit microcontroller that runs at 16 MHz. It has 32 KB of flash memory, 2 KB of SRAM, and 1 KB of EEPROM. The board has 14 digital I/O pins (of which 6 can be used as PWM outputs) and 6 analog input pins. These pins allow the board to interface with various sensors, actuators, and other devices.The Arduino Uno can be powered via a USB connection or an external power supply. The board has a built-in voltage regulator to manage power from 7 to 12 volts.
@@ -20,6 +27,7 @@ The board is programmable using the Arduino IDE (Integrated Development Environm
 Step 1: Set Up the Tinkercad Environment
 •	Log in to Tinkercad: Open Tinkercad in your web browser and log in to your account.
 •	Create a New Circuit: In the Tinkercad dashboard, click on "Circuits" and then select "Create New Circuit."
+
 Step 2: Add Components to the Circuit
 •	Arduino Uno: Drag an Arduino Uno board from the components panel onto the workspace.
 •	SW200D Sensor: Search for the SW200D sensor in the components panel and drag it into the workspace.
@@ -31,28 +39,65 @@ Step 3: Connect the Tilt Sensor (SW-200D) to Arduino:
 •	SW200D Vout (Middle Pin) to Arduino Digital Pin (e.g., D2): Use a wire to connect the middle pin (Vout) of the tilt sensor to a digital input pin on the Arduino.
 •	SW200D GND (One Side Pin) to Breadboard GND Rail: Connect one side pin of the tilt sensor to the ground rail of the breadboard.
 •	SW200D VCC (Other Side Pin) to Breadboard 5V Rail: Connect the other side pin of the tilt sensor to the 5V rail of the breadboard.
+
 Step 4: Write the Arduino Code
 •	Code Editor: Click on the "Code" button at the top of the Tinkercad workspace to open the code editor.
 •	Set the Coding Mode: Ensure the editor is in "Text" mode to write your code in C/C++.
 •	Enter the Code: Write the following code from the SW200D sensor:
+
 Step 5: Simulate the Circuit
 •	Start Simulation: Click the "Start Simulation" button at the top of the workspace to run the circuit and code.
 •	Monitor Output: Open the serial monitor by clicking the "Serial Monitor" button 
+
 Step 6: Troubleshoot and Refine
 •	Check Connections: Ensure that all connections are made correctly on the breadboard and the Arduino.
 •	Adjust Code: If needed, tweak the code to improve accuracy or change the format of the output.
+
 Step 7: Save Your Work
 •	Stop Simulation: Click "Stop Simulation" to end the simulation.
 •	Save the Circuit: Click "Save" to keep your circuit design and code for future use.
 
 ## Code:
+```
+// Anti-Theft Alert System using Tilt Sensor + Buzzer + LED
 
+const int tiltSensor = 2;   // Tilt sensor connected to D2
+const int buzzer = 7;       // Buzzer connected to D7
+const int led = 8;          // LED connected to D8
+
+void setup() {
+  pinMode(tiltSensor, INPUT_PULLUP);  // Internal pull-up, tilt sensor → GND when tilted
+  pinMode(buzzer, OUTPUT);
+  pinMode(led, OUTPUT);
+
+  Serial.begin(9600);
+  Serial.println("Anti-Theft Alert System Ready");
+}
+
+void loop() {
+  int tiltState = digitalRead(tiltSensor);
+
+  if (tiltState == LOW) {   // Tilt detected
+    tone(buzzer, 1000);         // Play 1000 Hz tone (1kHz beep)
+    digitalWrite(led, HIGH);    // Turn LED ON
+    Serial.println("⚠️ Tilt Detected - Possible Theft!");
+    delay(200);
+    tone(buzzer, 2000);         // Change to 2000 Hz tone (higher pitch)
+    delay(200);
+  } else {
+    noTone(buzzer);             // Stop sound
+    digitalWrite(led, LOW);     // Turn LED OFF
+  }
+
+  delay(100);
+}
+
+```
 
 
 ## Output:
 
- 
-
+https://github.com/user-attachments/assets/f7892684-bc91-45ba-9dda-cbd5fc614406
 
 ## Result:
 
